@@ -12,6 +12,8 @@
 * [Access modifiers](#access-modifiers)
 * [Static properties and methods](#static-properties-and-methods)
 * [Interfaces](#Interfaces)
+* [Inheritance](#Inheritance)
+* [Namespaces](#Namespaces)
 
 ## Any type
 
@@ -306,3 +308,51 @@ const pam: Employee = {
 
 console.log(pam.getUniqueId());
 ```
+
+## Inheritance
+
+`Inheritance` in object-oriented programming is a method for doing code reuse.
+
+```js
+class Vehicle {
+    constructor(private wheelCount: number) {}
+    
+    showNumberOfWheels() {
+        console.log(`moved ${this.wheelCount} miles`);
+    }
+}
+
+class Motorcycle extends Vehicle {
+    constructor() {
+        super(2);
+    }
+}
+
+class Automobile extends Vehicle {
+    constructor() {
+        super(4);
+    }
+}
+
+const motorCycle = new Motorcycle();
+motorCycle.showNumberOfWheels();
+
+const autoMobile = new Automobile();
+autoMobile.showNumberOfWheels();
+```
+
+## Namespaces
+
+The concept of `namespaces` allows tocreate scoping contrianers and separate one set of code from another.
+
+```js
+namespace A {
+    class FirstClass {}
+}
+
+namespace B {
+    class SecondClass {}
+    const test = new FirstClass();
+}
+```
+The code above gives an error even before compiling. VSCode IntelliSence is already complaing about the fact that `FirstClass` cannot be found.
