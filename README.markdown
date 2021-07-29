@@ -10,6 +10,8 @@
 * [Never type](#never-type)
 * [Classes](#classes)
 * [Access modifiers](#access-modifiers)
+* [Static properties and methods](#static-properties-and-methods)
+* [Interfaces](#Interfaces)
 
 ## Any type
 
@@ -238,3 +240,69 @@ Note: Typescript should be set to use `ES6` for getters and setters!
 tsc --target "ES6" <filename.ts>
 ```
 
+## Static properties and methods
+
+Marking something `static` inside a class makes this member is a member of a class type and not of a class instance.
+
+```js
+class Runner {
+    static lastRunTypeName: string;
+    constructor(private typeName: string) {}
+    
+    run() {
+        Runner.lastRunTypeName = this.typeName;
+    }
+}
+
+const a = new Runner("a");
+const b = new Runner("b");
+b.run();
+a.run();
+
+console.log(Runner.lastRunTypeName);
+```
+Example above shows the usage when need to check the las class instance that has called some function.
+
+
+## Interfaces
+
+`Interfaces` used when needed to show only a signature of a type hiding internal logic
+
+```js
+interface Employee {
+    name: string;
+    id: number;
+    isManager: boolean;
+    getUniqueId: () => string;
+}
+
+const linda: Employee = {
+    name: "linda",
+    id: 2,
+    isManager: false,
+    getUniqueId: (): string => {
+        let uniqueId = linda.id + "-" + linda.name;
+        if(!linda.isManager) {
+            return "emp-" + uniqueId;
+        }
+        return uniqueId;
+    }
+}
+
+console.log(linda.getUniqueId());
+
+const pam: Employee = {
+    name: "pam",
+    id: 1,
+    isManager: true,
+    getUniqueId: (): string => {
+        let uniqueId = pam.id + "-" + pam.name;
+        if(pam.isManager) {
+            return "mgr-" + uniqueId;
+        }
+        return uniqueId;
+    }
+}
+
+console.log(pam.getUniqueId());
+```
