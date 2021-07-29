@@ -42,7 +42,7 @@ console.log(val);
 
 ## Intersection and union types
 
-TypeScript allows the developer to "create types" by merging multiple distinct types together. What's called intersection types.
+TypeScript allows the developer to "create types" by merging multiple distinct types together. What's called `intersection` types.
 
 ```js
 let obj: { name: string } & { age: number } = {
@@ -52,3 +52,12 @@ age: 25
 console.log(obj);
 ```
 The code above will print: `{name: 'tom', age: 25}`
+
+The other type is similar, but in case of unions, instead of merging types we define using them in either one or another fshion:
+
+```js
+let unionObj: null | { name: string } = null;
+unionObj = { name: 'jon'};
+console.log(unionObj);
+```
+The unionObj variable is declared to be of the `null` type or `{ name: string }`, by the use of the `|` character. The code above will accept both type values: `null` or a `string`
