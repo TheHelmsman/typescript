@@ -6,6 +6,8 @@
 * [Literal types](#literal-types)
 * [Type aliases](#type-aliases)
 * [Function return types](#function-return-types)
+* [Functions as types](#functions-as-types)
+* [Never type](#never-type)
 
 ## Any type
 
@@ -109,5 +111,36 @@ function runMore(distance: number): number {
 
 function sleepIn(hours: number): void {
 console.log("I slept " + hours + " hours");
+}
+```
+
+## Functions as types
+
+In TypeScript, a type can also be an entire function signature.
+
+```js
+type Run = (miles: number) => boolean;
+
+let runner: Run = function (miles: number): boolean {
+    if(miles > 10){
+        return true;
+    }
+    return false;
+}
+
+console.log(runner(9));
+```
+
+## Never type
+
+```js
+function oldEnough(age: number): never | boolean {
+    if(age > 59) {
+        throw Error("Too old!");
+    }
+    if(age <=18){
+        return false;
+    }
+    return true;
 }
 ```
