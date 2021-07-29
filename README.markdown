@@ -17,6 +17,7 @@
 * [Abstract classes](#abstract-classes)
 * [Interface inheritance](#interface-inheritance)
 * [Generics](#generics)
+* [Optional chaining](#optional-chaining)
 
 ## Any type
 
@@ -516,9 +517,41 @@ namespace GenericNamespace {
             super("Chevy", { count: 4, diameter: 18 });
         }
     }
-    
+
     const chevy = new Chevy();
     console.log("car name ", chevy.getName());
     console.log("wheels ", chevy.getWheelCount());
 }
 ```
+
+## Optional chaining
+
+`Optional chaining` allows to prevent small class of errors having to do with `null` objects.
+
+```js
+namespace OptionalChainingNS {
+    interface Wheels {
+        count?: number;
+    }
+
+    interface Vehicle {
+        wheels?: Wheels;
+    }
+
+    class Automobile implements Vehicle {
+        constructor(public wheels?: Wheels) {}
+    }
+
+    const car: Automobile | null = new Automobile({
+        count: undefined
+    });
+
+    console.log("car ", car);
+    console.log("wheels ", car?.wheels);
+    console.log("count ", car?.wheels?.count);
+}
+```
+
+
+
+
