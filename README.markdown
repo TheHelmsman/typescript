@@ -8,6 +8,8 @@
 * [Function return types](#function-return-types)
 * [Functions as types](#functions-as-types)
 * [Never type](#never-type)
+* [Classes](#classes)
+* [Access modifiers](#access-modifiers)
 
 ## Any type
 
@@ -144,3 +146,95 @@ function oldEnough(age: number): never | boolean {
     return true;
 }
 ```
+
+## Classes
+
+Class represents a container for related set of fields and methods, that can be instantiated and used:
+
+```js
+class Person {
+
+    msg: string;
+    constructor() {}
+    
+    speak() {
+        console.log(this.msg);
+    }
+}
+
+const tom = new Person();
+tom.msg = "hello";
+tom.speak();
+```
+
+## Access modifiers
+
+`private` - to hide property from direct modification:
+```js
+class Person {
+
+    constructor(private msg: string) {}
+
+    speak() {
+        console.log(this.msg);
+    }
+}
+
+const tom = new Person("hello");
+// tom.msg = "hello";
+tom.speak();
+```
+By setting the field to `private`, we make it inaccessible from outside of the class.
+
+`readonly` - modifier allos property to be set once in the constructor
+```js
+class Person {
+
+    constructor(private readonly msg: string) {}
+
+    speak () {
+        this.msg = "speak " + this.msg;
+        console.log(this.msg);
+    }
+}
+
+const tom = new Person("hello");
+// tom.msg = "hello";
+tom.speak();
+```
+
+`Getter`: A property that allows modification or validation of a related field before returning it
+
+`Setter`: A property that allows modification or computation of a value before setting to a related field
+```js
+class Speaker {
+
+    private message: string;
+    constructor(private name: string) {}
+
+    get Message() {
+        if(!this.message.includes(this.name)){
+            throw Error("message is missing speaker's name");
+        }
+        return this.message;
+    }
+
+    set Message(val: string) {
+        let tmpMessage = val;
+        if(!val.includes(this.name)){
+            tmpMessage = this.name + " " + val;
+        }
+        this.message = tmpMessage;
+    }
+}
+
+const speaker = new Speaker("john");
+speaker.Message = "hello";
+console.log(speaker.Message);
+```
+
+Note: Typescript should be set to use `ES6` for getters and setters!
+```js
+tsc --target "ES6" <filename.ts>
+```
+
