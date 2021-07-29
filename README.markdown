@@ -3,6 +3,9 @@
 * [The any type](#any-type)
 * [The unknown type](#unknown-type)
 * [Intersection and union types](#intersection-and-union-types)
+* [Literal types](#literal-types)
+* [Type aliases](#type-aliases)
+* [Function return types](#function-return-types)
 
 ## Any type
 
@@ -61,3 +64,50 @@ unionObj = { name: 'jon'};
 console.log(unionObj);
 ```
 The unionObj variable is declared to be of the `null` type or `{ name: string }`, by the use of the `|` character. The code above will accept both type values: `null` or a `string`
+
+## Literal types
+
+`Literal` types are similar to union types, but they use a set of hardcoded string or number values.
+
+```js
+let literal: "tom" | "linda" | "jeff" | "sue" = "linda";
+literal = "sue";
+console.log(literal);
+```
+
+Trying to set `literal = "john";` gives an error.
+
+## Type aliases
+
+Type alias represents a method to give a different name to a type:
+
+Example 1:
+```js
+type Points = 20 | 30 | 40 | 50;
+let score: Points = 20;
+console.log(score);
+```
+
+Example 2:
+```js
+type ComplexPerson = {
+    name: string,
+    age: number,
+    birthday: Date,
+    married: boolean,
+    address: string
+}
+```
+
+## Function return types
+
+Function return declaration examples:
+```js
+function runMore(distance: number): number {
+    return distance + 10;
+}
+
+function sleepIn(hours: number): void {
+console.log("I slept " + hours + " hours");
+}
+```
