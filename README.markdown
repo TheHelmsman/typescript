@@ -15,6 +15,8 @@
 * [Inheritance](#inheritance)
 * [Namespaces](#namespaces)
 * [Abstract classes](#abstract-classes)
+* [Interface inheritance](#interface-inheritance)
+* [Generics](#generics)
 
 ## Any type
 
@@ -406,3 +408,117 @@ namespace AbstractNamespace {
 }
 ```
 The example above also demostrates overriding implementation of method in child class.
+
+## Interface inheritance
+
+Interfaces do not provide a means to do code reuse directly, as they have no implementation. However, it is still advantageous for code reuse because the structure of interfaces provides definite expectations around what code will receive and return. Hiding the implementation behind an interface is also beneficial in terms of doing encapsulation and abstraction, which are also important principles of object-oriented programming.
+
+```js
+namespace InterfaceNamespace {
+
+    interface Thing {
+        name: string;
+        getFullName: () => string;
+    }
+
+    interface Vehicle extends Thing {
+        wheelCount: number;
+        updateWheelCount: (newWheelCount: number) => void;
+        showNumberOfWheels: () => void;
+    }
+
+    class Motorcycle implements Vehicle {
+
+        name: string;
+        wheelCount: number;
+        
+        constructor(name: string) {
+            // no super for interfaces
+            this.name = name;
+        }
+        
+        updateWheelCount(newWheelCount: number){
+            this.wheelCount = newWheelCount;
+            console.log(`Automobile has ${this.wheelCount}`);
+        }
+        
+        showNumberOfWheels() {
+            console.log(`moved Automobile ${this.wheelCount}
+            miles`);
+        }
+        
+        getFullName() {
+            return "MC-" + this.name;
+        }
+    }
+
+    const moto = new Motorcycle("beginner-cycle");
+    console.log(moto.getFullName());
+}
+```
+
+## Generics
+
+`Generics` allows a type definition to include an associated type that can be chosen by the user of the generic type, instead of being dictated by the type creator. 
+
+```js
+function getLength<T>(arg: T): number {
+    if(arg.hasOwnProperty("length")) {
+        return arg["length"];
+    }
+    return 0;
+}
+
+console.log(getLength<number>(22));
+console.log(getLength("Hello world."));
+```
+
+
+```js
+interface HasLength {
+    length: number;
+}
+
+function getLength<T extends HasLength>(arg: T): number {
+    return arg.length;
+}
+
+console.log(getLength<number>(22));
+console.log(getLength("Hello world."));
+```
+
+```js
+namespace GenericNamespace {
+    interface Wheels {
+        count: number;
+        diameter: number;
+    }
+
+    interface Vehicle<T> {
+        getName(): string;
+        getWheelCount: () => T;
+    }
+
+    class Automobile implements Vehicle<Wheels> {
+        
+        constructor(private name: string, private wheels: Wheels){}
+        
+        getName(): string {
+            return this.name;
+        }
+        getWheelCount(): Wheels {
+            return this.wheels;
+        }
+    }
+    
+    class Chevy extends Automobile {
+        constructor() {
+            super("Chevy", { count: 4, diameter: 18 });
+        }
+    }
+    
+    const chevy = new Chevy();
+    console.log("car name ", chevy.getName());
+    console.log("wheels ", chevy.getWheelCount());
+}
+```
